@@ -6892,24 +6892,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Faraz\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\shezs\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Faraz\\Downloads\\SpecflowSelenium12012023\\PracticeProject\\PracticeProject.csproj",
+      "projectUniqueName": "C:\\Users\\shezs\\Source\\Repos\\iamfarazkhan7\\automationTesting1\\PracticeProject\\PracticeProject.csproj",
       "projectName": "PracticeProject",
-      "projectPath": "C:\\Users\\Faraz\\Downloads\\SpecflowSelenium12012023\\PracticeProject\\PracticeProject.csproj",
-      "packagesPath": "C:\\Users\\Faraz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Faraz\\Downloads\\SpecflowSelenium12012023\\PracticeProject\\obj\\",
+      "projectPath": "C:\\Users\\shezs\\Source\\Repos\\iamfarazkhan7\\automationTesting1\\PracticeProject\\PracticeProject.csproj",
+      "packagesPath": "C:\\Users\\shezs\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\shezs\\Source\\Repos\\iamfarazkhan7\\automationTesting1\\PracticeProject\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Faraz\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\shezs\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6923,8 +6918,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Faraz\\Downloads\\SpecflowSelenium12012023\\SeleniumAutoSite\\SeleniumAutoSite.csproj": {
-              "projectPath": "C:\\Users\\Faraz\\Downloads\\SpecflowSelenium12012023\\SeleniumAutoSite\\SeleniumAutoSite.csproj"
+            "C:\\Users\\shezs\\Source\\Repos\\iamfarazkhan7\\automationTesting1\\SeleniumAutoSite\\SeleniumAutoSite.csproj": {
+              "projectPath": "C:\\Users\\shezs\\Source\\Repos\\iamfarazkhan7\\automationTesting1\\SeleniumAutoSite\\SeleniumAutoSite.csproj"
             }
           }
         }
