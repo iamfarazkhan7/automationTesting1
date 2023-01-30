@@ -16,6 +16,8 @@ using System.Collections.ObjectModel;
 using OpenQA.Selenium.Internal;
 using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
 
+
+
 namespace Booking_web_Search.HelperFunctions
 {
     public class BookingSearch : BasePageObject
@@ -47,6 +49,7 @@ namespace Booking_web_Search.HelperFunctions
 
         public static BookingSearch waittoload(string xpath, IWebDriver driver)
         {
+            
             WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 8));
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
 
