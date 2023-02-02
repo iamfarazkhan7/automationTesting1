@@ -114,16 +114,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 13
  testRunner.When("Results on Left Side is in match with Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Rating"});
-                table1.AddRow(new string[] {
-                            "4"});
-                table1.AddRow(new string[] {
-                            "5"});
 #line 14
- testRunner.And("I click on <Rating> star properties and budget", ((string)(null)), table1, "And ");
+ testRunner.And("I click on 5 Star Rating", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 15
+ testRunner.And("I change the language to Arabic", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 16
+ testRunner.And("I wait for the page to load", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 17
+ testRunner.And("I verify that total results are above 100 and below 300", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 18
+ testRunner.And("I add more selection if results are below 100", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 19
+ testRunner.And("I reduce selection if results are above 300", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 20
  testRunner.Then("the sum of properties matches the total result", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

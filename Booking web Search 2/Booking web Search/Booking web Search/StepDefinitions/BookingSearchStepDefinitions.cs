@@ -10,6 +10,7 @@ using TechTalk.SpecFlow.Assist;
 using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.DevTools;
 using Booking_web_Search.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Booking_web_Search.StepDefinitions
 {
@@ -17,6 +18,7 @@ namespace Booking_web_Search.StepDefinitions
     public class BookingSearchStepDefinitions 
     {
         private IWebDriver driver;
+        private IWebElement dates;
         public string propertytotal;
        // private BookingSearch mainpage;
 
@@ -55,15 +57,17 @@ namespace Booking_web_Search.StepDefinitions
 
         {
 
-                Thread.Sleep(2000);
-                WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[1]/div[2]/div/div/div/div/span")), 2000);
-                 driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[1]/div[2]/div/div/div/div/span")).Click();
-               
-                driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[5]/td[3]")).Click();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
+                driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[1]/div[2]/div/div/div/div/span")).Click(); /// date filter needs to be reviewed again 
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
+                 driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[4]/td[5]")).Click();
 
-                driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[5]/td[6]")).Click();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[4]/td[7]")).Click();
+
+
+
+          
+
 
         }
         [When(@"I select 2 adults , 1 childern of Age 7")]
@@ -83,8 +87,9 @@ namespace Booking_web_Search.StepDefinitions
         }
         [Then(@"I am on Booking Site results page")]
         public void ThenIAmOnBookingSiteResultsPage()
+
+
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
 
             BookingSearch.waittoload("//*[@id='b2searchresultsPage']", driver);
 
@@ -98,22 +103,27 @@ namespace Booking_web_Search.StepDefinitions
             BookingSearch.VerifyResults(driver);
         }
 
-        [When(@"I click on <Rating> star properties and budget")]
-        public void WhenIClickOnRatingStarPropertiesAndBudget(Table star)
+        [When(@"I click on 5 Star Rating")]
+        public void WhenIClickOn5StarRating()
         {
 
-            /// Locating Star rating 
-            IWebElement element = driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[7]/label/span[2]"));
+            /// Locating 5  Star rating 
+            IWebElement element = driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            DriverExtensions.WaitForPageToLoad(driver, 10);
           
-            var results = star.CreateSet<StarRating>();
-            
 
-            int sumofboth;
+            driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]")).Click();
+
+            var totalno1 = driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[3]/div/div/span")).Text;
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        
+            BookingSearch.ResultsCountCheck(totalno1, driver);
+
+            //var results = star.CreateSet<StarRating>();
+                                   
             
-            foreach (var userData in results)
+            /*foreach (var userData in results) // for more then one star rating 
             {
                 if (userData.Rating == "4")
                 {
@@ -158,16 +168,63 @@ namespace Booking_web_Search.StepDefinitions
                 }
                 BookingSearch.StarRating(driver);
 
-            }
+            }*/
         }
 
+        [When(@"I change the language to Arabic")]
+        public void WhenIChangeTheLanguageToArabic()
+        {
+            WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.ClassName("cb5ebe3ffb")));
+            driver.FindElement(By.ClassName("cb5ebe3ffb")).Click() ;
+
+            WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.ClassName("cf67405157")));
+            driver.FindElement(By.ClassName("cf67405157")).Click();
         
+        }
+        [When(@"I wait for the page to load")]
+        public void WhenIWaitForThePageToLoad()
+        {
+
+            DriverExtensions.WaitForPageToLoad(driver);
+        
+        }
+        [When(@"I verify that total results are above 100 and below 300")]
+        public void WhenIVerifyThatTotalResultsAreAbove100AndBelow300()
+        {
+            BookingSearch.TotalResultsCheck(driver);
+
+        }
+
+        [When(@"I add more selection if results are below 100")]
+        public void WhenIAddMoreSelectionIfResultsAreBelow100()
+        {
+            BookingSearch.TotalResultsCheck(driver);
+
+        }
+
+        [When(@"I reduce selection if results are above 300")]
+        public void WhenIReduceSelectionIfResultsAreAbove300()
+        {
+            BookingSearch.TotalResultsCheck(driver);
+
+        }
 
         [Then(@"the sum of properties matches the total result")]
         public void ThenTheSumOfPropertiesMatchesTheTotalResult()
         {
-            Console.WriteLine("Values Match");
+
+            string v = driver.FindElement(By.TagName("h1")).GetAttribute("aria-label");
+            var pos = v.IndexOf(":");
+            var subText = v.Substring(pos+1);
+            var pos2 = subText.IndexOf(" ");
+            var subText2 = v.Substring(1,pos2-1);
+            Console.Write("Total no of properties :" + subText2);
+
+            BookingSearch.ResultsCountCheck(subText2, driver);
             driver.Quit();
         }
+           
+            
+        
     }
 }

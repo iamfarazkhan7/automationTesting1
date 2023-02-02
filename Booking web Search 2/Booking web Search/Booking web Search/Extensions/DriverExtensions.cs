@@ -21,7 +21,7 @@ namespace  Booking_web_Search.Extensions
             {
                 WaitForSplashLoaderToBeInvisible(driver);
                 WaitForPageToLoadContent(driver);
-                WaitForProgressBarToFinish(driver, 20);
+               // WaitForProgressBarToFinish(driver, 20);
             }
             catch (StaleElementReferenceException ex)
             {

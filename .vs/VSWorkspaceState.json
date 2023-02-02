@@ -5,8 +5,9 @@
     "\\Booking web Search 2\\Booking web Search",
     "\\Booking web Search 2\\Booking web Search\\Booking web Search",
     "\\Booking web Search 2\\Booking web Search\\Booking web Search\\Extensions",
+    "\\Booking web Search 2\\Booking web Search\\Booking web Search\\StepDefinitions",
     "\\SeleniumAutoSite"
   ],
-  "SelectedNode": "\\Booking web Search 2\\Booking web Search\\Booking web Search.sln",
+  "SelectedNode": "\\Booking web Search 2\\Booking web Search\\Booking web Search\\StepDefinitions\\BookingSearchStepDefinitions.cs",
   "PreviewInSolutionExplorer": false
 }

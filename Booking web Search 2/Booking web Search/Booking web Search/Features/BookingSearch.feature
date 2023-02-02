@@ -11,11 +11,13 @@ Scenario Outline: Search Booking
 	Then I click on to the search button 
 	And I am on Booking Site results page
 	When Results on Left Side is in match with Search
-	And I click on <Rating> star properties and budget
-			| Rating |
-			| 4      | 
-			| 5      | 
-
+	And I click on 5 Star Rating
+	And I change the language to Arabic
+	And I wait for the page to load
+	And I verify that total results are above 100 and below 300
+	And I add more selection if results are below 100 
+	And I reduce selection if results are above 300
 	Then the sum of properties matches the total result
+
 
 
