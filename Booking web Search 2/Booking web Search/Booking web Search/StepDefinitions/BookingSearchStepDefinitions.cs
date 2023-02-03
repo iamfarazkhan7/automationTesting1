@@ -11,45 +11,59 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.DevTools;
 using Booking_web_Search.Extensions;
 using System.Text.RegularExpressions;
+using System.Reflection.Metadata;
+using System.Linq.Expressions;
 
 namespace Booking_web_Search.StepDefinitions
 {
     [Binding]
     public class BookingSearchStepDefinitions 
     {
-        private IWebDriver driver;
-        private IWebElement dates;
-        public string propertytotal;
-       // private BookingSearch mainpage;
 
-
+        
         [Given(@"I am on Booking site")]
         public void GivenIAmOnBookingSite()
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
+            try
+            {
+                BasePageObject.StartTest("https://www.booking.com/");
+                BookingSearch bs = new BookingSearch(BasePageObject.driver);
 
-            BookingSearch.GoToPage(driver);
+                
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine("Test Failed: Could load load the page" +e.Message);
+                BasePageObject.CloseTest();
+                throw; 
+            
+            }
             
 
 
         }
 
-        [When(@"I click on search location and enter location")]
-        public void WhenIClickOnSearchLocationAndEnterLocation()
+        [When(@"I enter destination (.*)")]
+        public void WhenIEnterDestination(string loc)
         {
 
-            WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.XPath("//button[@id='onetrust-accept-btn-handler']")), 1000);
+            try
+            {
+                BookingSearch bs = new BookingSearch(BasePageObject.driver);
 
-            driver.FindElement(By.XPath("//button[@id='onetrust-accept-btn-handler']")).Click();
+                //WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.XPath("//button[@id='onetrust-accept-btn-handler']")), 1000);
+                bs.AcceptCookies();
+                bs.Destination("London");
+            }
 
+            catch (Exception e) {
 
-            WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.Name("ss")), 1000);
-            driver.FindElement(By.Name("ss")).SendKeys("London");
-            
-
+                Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+                BasePageObject.CloseTest();
+                throw;
+            }
         }
 
         [When(@"I enter the desired dates")]
@@ -57,68 +71,128 @@ namespace Booking_web_Search.StepDefinitions
 
         {
 
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
-                driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[1]/div[2]/div/div/div/div/span")).Click(); /// date filter needs to be reviewed again 
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
-                 driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[4]/td[5]")).Click();
+            try
+            {
+                BookingSearch bs = new BookingSearch(BasePageObject.driver);
+                bs.desireddates();
+            }
 
-                driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[4]/td[7]")).Click();
+            catch (Exception e)
 
+            {
+                Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+                BasePageObject.CloseTest();
+                throw;
 
-
-          
-
+            }
 
         }
         [When(@"I select 2 adults , 1 childern of Age 7")]
         public void WhenISelect2Adults1ChildernOfAge7()
         {
-            BookingSearch.GuestsList(driver);
+
+            try
+            {
+                BookingSearch bs = new BookingSearch(BasePageObject.driver);
+                bs.GuestsList();
+            }
+
+            catch (Exception e) 
+            
+            {
+
+                Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+                BasePageObject.CloseTest();
+                throw;
+            }
         }
 
         [Then(@"I click on to the search button")]
         public void ThenIClickOnToTheSearchButton()
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
 
-            BookingSearch.ClickSearchButton(driver);
+            try
+            {
+                BookingSearch bs = new BookingSearch(BasePageObject.driver);
+                bs.ClickSearchButton();
+            }
 
-
+            catch (Exception e )
+            
+            {
+                Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+                BasePageObject.CloseTest();
+                throw;
+            }
         }
+
+        
         [Then(@"I am on Booking Site results page")]
         public void ThenIAmOnBookingSiteResultsPage()
 
-
         {
+        try
+        {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                rp.waittoload("//*[@id='b2searchresultsPage']");
+        }
 
-            BookingSearch.waittoload("//*[@id='b2searchresultsPage']", driver);
+        catch(Exception e) 
+        
+        {
+            Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+            BasePageObject.CloseTest();
+            throw;
 
+
+        }
         }
 
         [When(@"Results on Left Side is in match with Search")]
         public void GivenResultsOnLeftSideIisInMatchWithSearch()
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-
-            BookingSearch.VerifyResults(driver);
+            try
+            {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                rp.VerifyResults();
+            }
+            catch (Exception e )
+            {
+                Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+                BasePageObject.CloseTest();
+                throw;
+            }
         }
 
         [When(@"I click on 5 Star Rating")]
         public void WhenIClickOn5StarRating()
         {
+            try
+            {
 
-            /// Locating 5  Star rating 
-            IWebElement element = driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]"));
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-          
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
 
-            driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]")).Click();
+                /// Locating 5  Star rating 
+                IWebElement element = BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]"));
+                ((IJavaScriptExecutor)BasePageObject.driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
+                BasePageObject.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-            var totalno1 = driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[3]/div/div/span")).Text;
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-        
-            BookingSearch.ResultsCountCheck(totalno1, driver);
+
+                BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]")).Click();
+
+                var totalno1 = BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[3]/div/div/span")).Text;
+                BasePageObject.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                rp.ResultsCountCheck(totalno1);
+            }
+
+            catch (Exception e )
+            {
+                Console.WriteLine("Test Failed: Could load load the page" + e.Message);
+                BasePageObject.CloseTest();
+                throw;
+
+            }
 
             //var results = star.CreateSet<StarRating>();
                                    
@@ -174,38 +248,73 @@ namespace Booking_web_Search.StepDefinitions
         [When(@"I change the language to Arabic")]
         public void WhenIChangeTheLanguageToArabic()
         {
-            WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.ClassName("cb5ebe3ffb")));
-            driver.FindElement(By.ClassName("cb5ebe3ffb")).Click() ;
+            try
+            { 
 
-            WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.ClassName("cf67405157")));
-            driver.FindElement(By.ClassName("cf67405157")).Click();
-        
+                WebElementExtensions.WaitForElementIsDisplayed(BasePageObject.driver.FindElement(By.ClassName("cb5ebe3ffb")));
+                BasePageObject.driver.FindElement(By.ClassName("cb5ebe3ffb")).Click();
+
+                WebElementExtensions.WaitForElementIsDisplayed(BasePageObject.driver.FindElement(By.ClassName("cf67405157")));
+                BasePageObject.driver.FindElement(By.ClassName("cf67405157")).Click();
+
+            }
+
+            catch (Exception e) { Console.WriteLine(e.Message); }   
+
+
         }
         [When(@"I wait for the page to load")]
         public void WhenIWaitForThePageToLoad()
         {
+            try
+            {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                rp.waittoload("//*[@id='b2searchresultsPage']");
+            }
 
-            DriverExtensions.WaitForPageToLoad(driver);
+            catch (Exception e) { Console.WriteLine(e.Message); }
+                    
+                    
+                    
+
+            
         
         }
         [When(@"I verify that total results are above 100 and below 300")]
         public void WhenIVerifyThatTotalResultsAreAbove100AndBelow300()
         {
-            BookingSearch.TotalResultsCheck(driver);
+            try
+            {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                rp.TotalResultsCheck();
+            }
+
+            catch(Exception e) { Console.WriteLine(e.Message); }
 
         }
 
         [When(@"I add more selection if results are below 100")]
         public void WhenIAddMoreSelectionIfResultsAreBelow100()
         {
-            BookingSearch.TotalResultsCheck(driver);
+            try
+            {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                rp.TotalResultsCheck();
+            }
 
+            catch (Exception e) { Console.WriteLine(e.Message); }
         }
 
         [When(@"I reduce selection if results are above 300")]
         public void WhenIReduceSelectionIfResultsAreAbove300()
         {
-            BookingSearch.TotalResultsCheck(driver);
+            try
+            {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                rp.TotalResultsCheck();
+            }
+
+            catch (Exception e) { Console.WriteLine(e.Message); }
 
         }
 
@@ -213,15 +322,26 @@ namespace Booking_web_Search.StepDefinitions
         public void ThenTheSumOfPropertiesMatchesTheTotalResult()
         {
 
-            string v = driver.FindElement(By.TagName("h1")).GetAttribute("aria-label");
-            var pos = v.IndexOf(":");
-            var subText = v.Substring(pos+1);
-            var pos2 = subText.IndexOf(" ");
-            var subText2 = v.Substring(1,pos2-1);
-            Console.Write("Total no of properties :" + subText2);
 
-            BookingSearch.ResultsCountCheck(subText2, driver);
-            driver.Quit();
+            try
+
+            {
+                ResultsPage rp = new ResultsPage(BasePageObject.driver);
+                string v = BasePageObject.driver.FindElement(By.TagName("h1")).GetAttribute("aria-label");
+                var pos = v.IndexOf(":");
+                var subText = v.Substring(pos + 1);
+                var pos2 = subText.IndexOf(" ");
+                var subText2 = v.Substring(1, pos2 - 1);
+                Console.Write("Total no of properties :" + subText2);
+                rp.ResultsCountCheck(subText2);
+            }
+            catch (Exception e ){
+                Console.WriteLine(e.Message);
+                BasePageObject.CloseTest();
+            }
+            
+           
+            
         }
            
             

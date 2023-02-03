@@ -5,7 +5,7 @@ This Feature details the way to search a property and then search the results on
 @SearchBooking
 Scenario Outline: Search Booking 
 	Given I am on Booking site 
-	When I click on search location and enter location
+	When I enter destination <Location>
 	And I enter the desired dates
 	And I select 2 adults , 1 childern of Age 7
 	Then I click on to the search button 
@@ -18,6 +18,7 @@ Scenario Outline: Search Booking
 	And I add more selection if results are below 100 
 	And I reduce selection if results are above 300
 	Then the sum of properties matches the total result
-
-
+	Examples: 
+	|Location|
+	|London	|
 
