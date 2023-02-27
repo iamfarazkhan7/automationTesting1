@@ -14,24 +14,25 @@ namespace Booking_web_Search.HelperFunctions
     {
 
         IWebDriver driver;
-        [FindsBy(How = How.ClassName, Using = "ce45093752")]
+        [FindsBy(How = How.Name, Using = "ss")]
         private IWebElement dest;
-        [FindsBy(How = How.XPath, Using = "//*[@id='left_col_wrapper']/div[1]/div/div/form/div/div[3]/div[2]/button")]
+        [FindsBy(How = How.XPath, Using = "//*[@class='fca8fcd83b']/div[2]/button/span[2]")]
         private IWebElement datefilter;
-        [FindsBy(How = How.XPath, Using = "//*[@id='left_col_wrapper']/div[1]/div/div/form/div/div[3]/div[2]/div/div/div[1]/div[1]/table/tbody/tr[4]/td[5]/span")]
+        [FindsBy(How = How.XPath, Using = "//table/tbody/tr[1]/td[3]/span")]
         private IWebElement startdate;
-        [FindsBy(How = How.XPath, Using = "///*[@id='left_col_wrapper']/div[1]/div/div/form/div/div[3]/div[2]/div/div/div[1]/div[1]/table/tbody/tr[4]/td[7]/span")]
+        [FindsBy(How = How.XPath, Using = "//table/tbody/tr[1]/td[5]/span")]
         private IWebElement enddate;
-        [FindsBy(How = How.XPath, Using = "//*[@id='left_col_wrapper']/div[1]/div/div/form/div/div[4]/div/button")]
+        [FindsBy(How = How.XPath, Using = "//form/div/div[4]/div/button")]
         private IWebElement peoplebutton;
         [FindsBy(How = How.ClassName, Using = "fca8fcd83b")]
         private IWebElement PageClick;
-        [FindsBy(How = How.XPath, Using = "//*[@id='left_col_wrapper']/div[1]/div/div/form/div/div[4]/div/div/div/div/div[1]/div[2]/span")]
+        [FindsBy(How = How.XPath, Using = "//*[@data-testid='occupancy-popup']/div/div[1]/div[2]/span")]
         private IWebElement adults;
-        [FindsBy(How = How.XPath, Using = "//*[@id='left_col_wrapper']/div[1]/div/div/form/div/div[4]/div/div/div/div/div[2]/div[2]/span")]
-        private IWebElement childern;
-        [FindsBy(How = How.XPath, Using = "//*[@class='bebf0b2b63']/option[9]")]
-        private IWebElement age;
+        [FindsBy(How = How.XPath, Using = "//*[@data-testid='occupancy-popup']/div/div[2]/div[2]/span")]
+        private IWebElement kids;
+        [FindsBy(How = How.XPath, Using = "//*[@data-testid='occupancy-popup']/div/div[3]/div/div/select/option[9]")]
+        private IWebElement ages;
+
         [FindsBy(How = How.XPath, Using = "//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[3]/div/div/span")]
         private IWebElement total;
 
@@ -66,19 +67,19 @@ namespace Booking_web_Search.HelperFunctions
             var adult = adults.Text;
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
-            var childrn = childern.Text;
+            var childrn = kids.Text;
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
-            var ages =age.GetAttribute("value");
+            var age = ages.Text;
 
             driver.FindElement(By.ClassName("fca8fcd83b")).Click();
+
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
-            if (destination == "London" && datestart == "2023-02-24" && dateend == "2023-02-26" && adult == "2" && childrn == "1" && ages == "7")
+            if (destination == "London" && datestart == "2023-03-01" && dateend == "2023-03-03" && adult == "2" && childrn == "1" && age == "7 years old")
             {
 
                 Console.WriteLine("Results are Verified and in Match with our search criteria");
-
 
             }
 
@@ -111,7 +112,7 @@ namespace Booking_web_Search.HelperFunctions
                 for (int i = 4; i > j;)
                 {
                     IWebElement element = driver.FindElement(By.Id("filter_group_popular_activities_:R24q:"));
-                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);                    //*[@id="filter_group_popular_activities_:R24q:"]/div[4]/label/span[2]
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);                  
                     Console.WriteLine("Reducing Selection ");
                     driver.FindElement(By.XPath("//*[@id='filter_group_popular_activities_:R24q:']div[i]/label/span[2]")).Click();
                     totals = total.Text;
@@ -184,18 +185,18 @@ namespace Booking_web_Search.HelperFunctions
         public void ResultsCountCheck(string totalno1)
         {
 
-            IWebElement element = driver.FindElement(By.XPath("//*[@id='search_results_table']/div[2]/div/div/div/div[4]/div[2]/nav/div/div[3]/button"));
+            IWebElement element = driver.FindElement(By.XPath("//*[@id='search_results_table']/div[2]/div/div/div[4]/div[2]/nav/div/div[3]/button"));  //*[@id="search_results_table"]/div[2]/div/div/div[4]/div[2]/nav/div/div[3]/button
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
             Thread.Sleep(500);
 
             int count = 0; // initializing the count
-            while (driver.FindElement(By.XPath("//*[@id='search_results_table']/div[2]/div/div/div/div[4]/div[2]/nav/div/div[3]/button")).Enabled)
+            while (driver.FindElement(By.XPath("//*[@id='search_results_table']/div[2]/div/div/div[4]/div[2]/nav/div/div[3]/button")).Enabled)
             {
                 int rowscount = driver.FindElements(By.XPath("//*[@data-testid='property-card']")).Count;
 
                 count += rowscount;
 
-                driver.FindElement(By.XPath("//*[@id='search_results_table']/div[2]/div/div/div/div[4]/div[2]/nav/div/div[3]/button")).Click();
+                driver.FindElement(By.XPath("//*[@id='search_results_table']/div[2]/div/div/div[4]/div[2]/nav/div/div[3]/button")).Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
             }

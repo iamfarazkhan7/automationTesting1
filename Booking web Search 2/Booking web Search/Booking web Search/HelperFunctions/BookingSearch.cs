@@ -25,22 +25,20 @@ namespace Booking_web_Search.HelperFunctions
     public class BookingSearch 
 
     {
+
         IWebDriver driver;
 
-       
-        public IWebElement searchbutton => driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[4]"));
-      
-        public IWebElement Guestbutton => driver.FindElement(By.ClassName("xp__input"));
-        public IWebElement Child => driver.FindElement(By.XPath("//*[@id='xp__guests__inputs-container']/div/div/div[2]/div/div[2]/button[2]/span"));
-        public IWebElement childdropdown => driver.FindElement(By.XPath("//*[@id='xp__guests__inputs-container']/div/div/div[3]/select"));
-        public IWebElement childage => driver.FindElement(By.XPath("//*[@id='xp__guests__inputs-container']/div/div/div[3]/select/option[9]"));
+        //*[@id="xp__guests__toggle"]
+        public IWebElement searchbutton => driver.FindElement(By.CssSelector("button[type='submit']")); 
+        public IWebElement Guestbutton => driver.FindElement(By.XPath("//*[@class='d67edddcf0']/button[1]"));
+        public IWebElement Child => driver.FindElement(By.XPath("//*[@data-testid='occupancy-popup']/div/div[2]/div[2]/button[2]"));
+        public IWebElement childdropdown => driver.FindElement(By.Name("age"));
+        public IWebElement childage => driver.FindElement(By.ClassName("sb_child_ages_empty_zero"));
         public IWebElement Cookies=> driver.FindElement(By.XPath("//*[@id='onetrust-accept-btn-handler']"));
          public IWebElement Dest=>driver.FindElement(By.Name("ss"));
-        public IWebElement Datebutton => driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[1]/div[2]/div/div/div/div/span"));
-       
-        public IWebElement Startdate => driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[4]/td[5]"));
-      
-        public IWebElement Enddate => driver.FindElement(By.XPath("//*[@id='frm']/div[1]/div[2]/div[2]/div/div/div[3]/div[1]/table/tbody/tr[4]/td[7]"));
+        public IWebElement Datebutton => driver.FindElement(By.XPath("//*[@data-testid='date-display-field-start']"));
+        public IWebElement Startdate => driver.FindElement(By.XPath("//*[@data-testid='searchbox-datepicker-calendar']/div[1]/div[2]/table/tbody/tr[1]/td[3]"));
+        public IWebElement Enddate => driver.FindElement(By.XPath("//*[@data-testid='searchbox-datepicker-calendar']/div[1]/div[2]/table/tbody/tr[1]/td[5]"));
 
         public BookingSearch(IWebDriver driver) 
         {
@@ -81,17 +79,16 @@ namespace Booking_web_Search.HelperFunctions
         {
             Guestbutton.Click();
             Child.Click();
-            childdropdown.Click();  
-            childage.Click();
 
-
-
-        }
+            SelectElement dropDown = new SelectElement(childdropdown);
+            dropDown.SelectByValue("7");
+                           
+            
+         }
 
         public  void ClickSearchButton()
         {
             searchbutton.Click();
-
 
 
         }

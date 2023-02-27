@@ -13,6 +13,7 @@ using Booking_web_Search.Extensions;
 using System.Text.RegularExpressions;
 using System.Reflection.Metadata;
 using System.Linq.Expressions;
+using DocumentFormat.OpenXml.Office.CustomUI;
 
 namespace Booking_web_Search.StepDefinitions
 {
@@ -53,7 +54,6 @@ namespace Booking_web_Search.StepDefinitions
             {
                 BookingSearch bs = new BookingSearch(BasePageObject.driver);
 
-                //WebElementExtensions.WaitForElementIsDisplayed(driver.FindElement(By.XPath("//button[@id='onetrust-accept-btn-handler']")), 1000);
                 bs.AcceptCookies();
                 bs.Destination("London");
             }
@@ -173,14 +173,14 @@ namespace Booking_web_Search.StepDefinitions
                 ResultsPage rp = new ResultsPage(BasePageObject.driver);
 
                 /// Locating 5  Star rating 
-                IWebElement element = BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]"));
+                IWebElement element = BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[10]/label/span[2]"));
                 ((IJavaScriptExecutor)BasePageObject.driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
                 BasePageObject.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
 
-                BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]")).Click();
+                BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[10]/label/span[2]")).Click();
 
-                var totalno1 = BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[3]/div/div/span")).Text;
+                var totalno1 = BasePageObject.driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[10]/label/span[3]/div/div/span")).Text;
                 BasePageObject.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
                 rp.ResultsCountCheck(totalno1);
@@ -194,55 +194,7 @@ namespace Booking_web_Search.StepDefinitions
 
             }
 
-            //var results = star.CreateSet<StarRating>();
-                                   
-            
-            /*foreach (var userData in results) // for more then one star rating 
-            {
-                if (userData.Rating == "4")
-                {
-
-                    driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[7]/label/span[2]")).Click();
-
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
-
-                    /// Locating Budget rating 
-                        IWebElement element1 = driver.FindElement(By.XPath("//*[@id='filter_group_pri_:Rcq:']/div[2]/div[5]/label/span[2]"));
-                        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element1);
-
-                        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-                        driver.FindElement(By.XPath("//*[@id='filter_group_pri_:Rcq:']/div[2]/div[5]/label/span[2]")).Click();
-                        var totalno1 = driver.FindElement(By.XPath("//*[@id='filter_group_pri_:Rcq:']/div[2]/div[5]/label/span[3]/div/div/span")).Text;
-                        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
-
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-
-                    BookingSearch.ResultsCountCheck(totalno1, driver) ;
-                }
-
-                else
-                {
-
-                    driver.FindElement(By.XPath("//*[@id='filter_group_pri_:Rcq:']/div[2]/div[5]/label/span[2]")).Click();
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
-                    driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[7]/label/span[2]")).Click();
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
-                    driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[2]")).Click();
-
-                    var totalno1 = driver.FindElement(By.XPath("//*[@id='filter_group_class_:R1cq:']/div[9]/label/span[3]/div/div/span")).Text;
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-
-                    BookingSearch.ResultsCountCheck(totalno1,driver);
-
-                }
-                BookingSearch.StarRating(driver);
-
-            }*/
+           
         }
 
         [When(@"I change the language to Arabic")]
@@ -251,11 +203,11 @@ namespace Booking_web_Search.StepDefinitions
             try
             { 
 
-                WebElementExtensions.WaitForElementIsDisplayed(BasePageObject.driver.FindElement(By.ClassName("cb5ebe3ffb")));
-                BasePageObject.driver.FindElement(By.ClassName("cb5ebe3ffb")).Click();
+                WebElementExtensions.WaitForElementIsDisplayed(BasePageObject.driver.FindElement(By.CssSelector("button[data-testid='header-language-picker-trigger']")));
+                BasePageObject.driver.FindElement(By.CssSelector("button[data-testid='header-language-picker-trigger']")).Click();
 
-                WebElementExtensions.WaitForElementIsDisplayed(BasePageObject.driver.FindElement(By.ClassName("cf67405157")));
-                BasePageObject.driver.FindElement(By.ClassName("cf67405157")).Click();
+                WebElementExtensions.WaitForElementIsDisplayed(BasePageObject.driver.FindElement(By.XPath("//*[@id='b2searchresultsPage']/div[26]/div/div/div/div/div[2]/div/div[2]/div/div/ul[7]/li[4]/button")));
+                BasePageObject.driver.FindElement(By.XPath("//*[@id='b2searchresultsPage']/div[26]/div/div/div/div/div[2]/div/div[2]/div/div/ul[7]/li[4]/button")).Click();
 
             }
 
